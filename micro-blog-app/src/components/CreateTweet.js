@@ -14,12 +14,17 @@ function CreateTweet(props) {
   const handleNoteTextChange = (event) => {
     setTweetText(event.target.value);
     setTweetDate(moment().format());
-    if (tweetText.length < 140) {
+  };
+
+  useEffect(() => {
+    // console.log(tweetText.length);
+    // console.log(isDisabled);
+    if (tweetText.length <= 140) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  };
+  }, [tweetText]);
 
   useEffect(() => {
     setTweetData({
@@ -27,8 +32,7 @@ function CreateTweet(props) {
       tweetDate: tweetDate,
       dateCreated: Date.now(),
     });
-    console.log(tweetText.length);
-  }, [tweetText, tweetDate]);
+  }, [tweetText]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
