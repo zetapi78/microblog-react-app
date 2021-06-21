@@ -1,6 +1,8 @@
 import React from "react";
 import moment from "moment";
 import TextareaAutosize from "react-textarea-autosize";
+import Loader from "./Loader.js";
+import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import "../App.css";
 
@@ -10,6 +12,7 @@ function CreateTweet(props) {
   const [tweetDate, setTweetDate] = useState("");
   const [tweetData, setTweetData] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleNoteTextChange = (event) => {
     setTweetText(event.target.value);
@@ -17,8 +20,6 @@ function CreateTweet(props) {
   };
 
   useEffect(() => {
-    // console.log(tweetText.length);
-    // console.log(isDisabled);
     if (tweetText.length <= 140) {
       setIsDisabled(false);
     } else {
@@ -28,18 +29,47 @@ function CreateTweet(props) {
 
   useEffect(() => {
     setTweetData({
-      tweetText: tweetText,
-      tweetDate: tweetDate,
-      dateCreated: Date.now(),
+      content: tweetText,
+      date: tweetDate,
+      userName: "zeta",
+      id: uuidv4(),
     });
   }, [tweetText]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setTweetsList((prevState) => {
-      return [tweetData, ...prevState];
-    });
+    setIsLoading(true);
 
+    //Posting the tweet in the server
+    const tweetPostData = {
+      content: tweetData.content,
+      userName: tweetData.userName,
+      date: tweetData.date,
+    };
+    const postUrl =
+      "https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet";
+    fetch(postUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tweetPostData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success!");
+        setTimeout(() => {
+          setTweetsList((prevState) => {
+            return [tweetData, ...prevState];
+          });
+          setIsLoading(false);
+        }, [1000]);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Your tweet was not saved, please try again");
+      });
+    //Clearing the previous tweet values
     setTweetText("");
     setTweetDate("");
   };
@@ -47,7 +77,6 @@ function CreateTweet(props) {
   return (
     <form className="note-editor" onSubmit={(event) => handleSubmit(event)}>
       <div className="note-input">
-        {/* <label htmlFor="noteText">Your tweet here..</label> */}
         <TextareaAutosize
           type="text"
           name="noteText"
@@ -75,6 +104,7 @@ function CreateTweet(props) {
           Tweet
         </button>
       </div>
+      <div className="loader">{isLoading && <Loader />}</div>
     </form>
   );
 }
