@@ -1,25 +1,17 @@
-import { useEffect, useState } from "react";
-import CreateTweet from "./components/CreateTweet.js";
-import TweetsList from "./components/TweetsList.js";
-import { getTweets } from "./lib/database";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Home from "./components/Home.js";
+import Profile from "./components/Profile.js";
+
 import "./App.css";
 
 function App() {
-  const [tweetsList, setTweetsList] = useState([]);
-
-  useEffect(() => {
-    getTweets()
-      .then((response) => response.json())
-      .then((data) => {
-        setTweetsList(data.tweets);
-      });
-  }, []);
-
   return (
-    <div className="note">
-      <CreateTweet setTweetsList={setTweetsList} />
-      <TweetsList tweetsList={tweetsList} setTweetsList={setTweetsList} />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/profile" component={Profile} />
+        <Route exact path="/" component={Home} />
+      </Switch>
+    </Router>
   );
 }
 

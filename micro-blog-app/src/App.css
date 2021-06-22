@@ -22,9 +22,8 @@ textarea {
   justify-content: center;
 }
 label {
-  font-size: 11px;
-  font-weight: bold;
-  color: #595c5a;
+  font-size: 18px;
+  color: whitesmoke;
 }
 .note {
   width: 600px;
@@ -244,70 +243,6 @@ label {
   cursor: pointer;
 }
 
-.edit-icon {
-  display: inline-block;
-  font-size: 12px;
-  color: rgb(85, 83, 83);
-  margin: 2px 6px;
-  cursor: pointer;
-}
-
-.save-icon {
-  display: inline-block;
-  align-content: center;
-  font-size: 12px;
-  color: rgb(85, 83, 83);
-  margin: 2px 6px;
-  cursor: pointer;
-}
-.open-button {
-  float: right;
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
-  background-color: #cfcfd0;
-  border-radius: 1rem;
-  cursor: pointer;
-  color: #07336d;
-  font-size: 6px;
-  padding: 1px 1px;
-  text-decoration: none;
-  text-shadow: 0px 0.5px 0px #a7a6b1;
-}
-
-.open-button:hover {
-  background-color: #07336d;
-  color: #cfcfd0;
-}
-
-.open-button:active {
-  position: relative;
-  top: 1px;
-}
-
-.open-button:focus {
-  outline: 0;
-}
-
-.close-button {
-  cursor: pointer;
-  font-size: 7px;
-  border-radius: 1rem;
-}
-
-.close-button:hover {
-  background-color: #1a1c1f;
-  color: #cfcfd0;
-}
-
-.edit-note-date {
-  text-align: right;
-  width: -webkit-fill-available;
-  font-size: 10px;
-  font-weight: bold;
-  color: rgb(44, 55, 66);
-}
-
 .loader {
   align-self: center;
 }
@@ -348,4 +283,132 @@ label {
     top: 24px;
     height: 32px;
   }
+}
+
+.page-wrapper {
+  width: 90%;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+
+/* ABOUT PAGE STYLING*/
+.nav-bar-up {
+  margin-top: 1px;
+  width: 100%;
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  position: relative; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+}
+
+.linkText {
+  color: #949393;
+  text-shadow: rgb(44, 55, 66);
+  display: block;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  padding: 0;
+}
+
+.linkText:hover {
+  color: #ffffff;
+  text-shadow: rgb(151, 152, 153);
+}
+
+.nav-bar-up ul {
+  background-color: #343a40;
+  height: 58px;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 6px;
+}
+
+.nav-bar-up li {
+  float: center;
+}
+
+.nav-bar-up .navtext {
+  font-weight: 200;
+  float: left;
+  color: #949393;
+  text-shadow: rgb(44, 55, 66);
+  margin: 18px 18px 2px 36px;
+}
+
+.nav-bar-up .navtext:hover:not(.active) {
+  color: whitesmoke;
+}
+
+.username {
+  width: 600px;
+  height: auto;
+  margin-top: 20px;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  background-color: #15202b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 2px;
+  padding: 10px;
+  margin-bottom: 10px;
+  -webkit-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.name-editor {
+  width: 100%;
+  padding: 8px 4px;
+  margin: 16px auto;
+  background-color: #15202b;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.namearea {
+  width: 100%;
+  background-color: #15202b;
+  color: white;
+  resize: none;
+  margin: 4px 2px 4px 4px;
+  padding: 2px 4px 2px 2px;
+  font-size: 16px;
+  border: 2px solid #cccccc;
+  box-sizing: border-box;
+  border-radius: 6px;
+  font-weight: 100;
+}
+
+.profile-title {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 32px;
+  color: white;
+}
+
+.name-input {
+  background-color: #15202b;
+}
+
+.user-button {
+  margin-top: 4px;
 }

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import "../App.css";
 
 function CreateTweet(props) {
-  const { setTweetsList } = props;
+  const { setTweetsList, userName } = props;
   const [tweetText, setTweetText] = useState("");
   const [tweetDate, setTweetDate] = useState("");
   const [tweetData, setTweetData] = useState({});
@@ -31,7 +31,7 @@ function CreateTweet(props) {
     setTweetData({
       content: tweetText,
       date: tweetDate,
-      userName: "zeta",
+      userName: userName,
       id: uuidv4(),
     });
   }, [tweetText]);
@@ -39,6 +39,7 @@ function CreateTweet(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setIsDisabled(true);
 
     //Posting the tweet in the server
     const tweetPostData = {
@@ -58,12 +59,12 @@ function CreateTweet(props) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success!");
-        setTimeout(() => {
-          setTweetsList((prevState) => {
-            return [tweetData, ...prevState];
-          });
-          setIsLoading(false);
-        }, [1000]);
+
+        setTweetsList((prevState) => {
+          return [tweetData, ...prevState];
+        });
+        setIsLoading(false);
+        setIsDisabled(false);
       })
       .catch((error) => {
         console.error("Error:", error);
