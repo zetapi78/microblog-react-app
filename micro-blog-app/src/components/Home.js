@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import CreateTweet from "./CreateTweet.js";
-import TweetsList from "./TweetsList.js";
+import TweetList from "./TweetList.js";
 import NavbarUp from "./NavbarUp.js";
 import Loader from "./Loader.js";
-import { getTweets } from "../lib/database";
+import AppContext from "../context/AppContext";
+import { getTweets, useInterval } from "../lib/database";
 import "../App.css";
-import { useLocation } from "react-router-dom";
 
 function Home() {
-  const location = useLocation();
-  const { newUserName } = location.state || "";
-  const [tweetsList, setTweetsList] = useState([]);
+  const appContext = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,18 +16,25 @@ function Home() {
     getTweets()
       .then((response) => response.json())
       .then((data) => {
-        setTweetsList(data.tweets);
+        appContext.setTweetList(data.tweets);
         setIsLoading(false);
+        appContext.setRefreshTime(0);
       });
-  }, []);
+  }, [appContext.refreshTime]);
+
+  useInterval(() => {
+    // Your custom logic here
+    appContext.setRefreshTime(appContext.refreshTime + 1);
+    console.log(appContext.refreshTime);
+  }, 180000); //setting the refresh time to 3min
 
   return (
     <div className="page-wrapper">
-      <NavbarUp userName={newUserName} />
+      <NavbarUp />
       <div className="note">
-        <CreateTweet setTweetsList={setTweetsList} userName={newUserName} />
+        <CreateTweet />
         <div className="loader">{isLoading && <Loader />}</div>
-        <TweetsList tweetsList={tweetsList} setTweetsList={setTweetsList} />
+        <TweetList />
       </div>
     </div>
   );

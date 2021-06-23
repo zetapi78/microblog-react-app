@@ -2,13 +2,14 @@ import React from "react";
 import moment from "moment";
 import TextareaAutosize from "react-textarea-autosize";
 import Loader from "./Loader.js";
-import { getTweets } from "../lib/database";
+import { postTweets } from "../lib/database";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import AppContext from "../context/AppContext";
 import "../App.css";
 
-function CreateTweet(props) {
-  const { setTweetsList, userName } = props;
+function CreateTweet() {
+  const appContext = useContext(AppContext);
   const [tweetText, setTweetText] = useState("");
   const [tweetDate, setTweetDate] = useState("");
   const [tweetData, setTweetData] = useState({});
@@ -32,7 +33,7 @@ function CreateTweet(props) {
     setTweetData({
       content: tweetText,
       date: tweetDate,
-      userName: userName,
+      userName: appContext.userName,
       id: uuidv4(),
     });
   }, [tweetText]);
@@ -48,27 +49,14 @@ function CreateTweet(props) {
       userName: tweetData.userName,
       date: tweetData.date,
     };
-    const postUrl =
-      "https://micro-blogging-dot-full-stack-course-services.ew.r.appspot.com/tweet";
-    fetch(postUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tweetPostData),
-    })
+    postTweets(tweetPostData)
       .then((response) => response.json())
       .then((data) => {
         console.log("Success!");
-
-        setTweetsList((prevState) => {
+        appContext.setTweetList((prevState) => {
           return [tweetData, ...prevState];
         });
-        getTweets()
-          .then((response) => response.json())
-          .then((data) => {
-            setTweetsList(data.tweets);
-          });
+        appContext.setRefreshTime(0);
         setIsLoading(false);
         setIsDisabled(false);
       })

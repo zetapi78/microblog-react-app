@@ -1,37 +1,39 @@
 import React from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import NavbarUp from "./NavbarUp.js";
+import AppContext from "../context/AppContext";
 import "../App.css";
 
 function Profile() {
-  const savedUserName = JSON.parse(window.localStorage.getItem("username"));
-  const [userName, setUserName] = useState(savedUserName);
-  const [newUserName, setNewUserName] = useState(savedUserName);
+  const appContext = useContext(AppContext);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleNameChange = (event) => {
-    setUserName(event.target.value);
+    appContext.setUserName(event.target.value);
   };
 
   useEffect(() => {
-    if (userName.length > 0) {
+    if (appContext.userName.length > 0) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [userName]);
+  }, [appContext.userName]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setNewUserName(userName);
-    window.localStorage.setItem("username", JSON.stringify(userName));
+    appContext.setUserName(appContext.userName);
+    window.localStorage.setItem(
+      "username",
+      JSON.stringify(appContext.userName)
+    );
     alert("Username changed succesfully!");
   };
 
   return (
     <div className="page-wrapper">
-      <NavbarUp userName={newUserName} />
+      <NavbarUp />
       <div className="username">
         <div className="profile-title">Profile</div>
         <form className="name-editor" onSubmit={(event) => handleSubmit(event)}>
@@ -43,7 +45,7 @@ function Profile() {
               id="nameText"
               minRows={1}
               className="namearea"
-              value={userName}
+              value={appContext.userName}
               onChange={(event) => handleNameChange(event)}
             />
           </div>

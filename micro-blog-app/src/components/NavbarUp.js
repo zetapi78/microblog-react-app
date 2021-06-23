@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import "../App.css";
 
-function NavbarUp(props) {
-  const { userName } = props;
+function NavbarUp() {
   return (
     <div className="nav-bar-up">
       <ul>
@@ -11,7 +10,6 @@ function NavbarUp(props) {
             className="linkText"
             to={{
               pathname: "/",
-              state: { newUserName: userName || "anonymous user" },
             }}
           >
             Home
@@ -22,7 +20,6 @@ function NavbarUp(props) {
             className="linkText"
             to={{
               pathname: "/profile",
-              state: { newUserName: userName },
             }}
           >
             Profile
