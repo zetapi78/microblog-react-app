@@ -7,7 +7,7 @@ import "../App.css";
 function Profile() {
   const savedUserName = JSON.parse(window.localStorage.getItem("username"));
   const [userName, setUserName] = useState(savedUserName);
-  const [newUserName, setNewUserName] = useState("");
+  const [newUserName, setNewUserName] = useState(savedUserName);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const handleNameChange = (event) => {

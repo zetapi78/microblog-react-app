@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 import TextareaAutosize from "react-textarea-autosize";
 import Loader from "./Loader.js";
+import { getTweets } from "../lib/database";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import "../App.css";
@@ -63,6 +64,11 @@ function CreateTweet(props) {
         setTweetsList((prevState) => {
           return [tweetData, ...prevState];
         });
+        getTweets()
+          .then((response) => response.json())
+          .then((data) => {
+            setTweetsList(data.tweets);
+          });
         setIsLoading(false);
         setIsDisabled(false);
       })

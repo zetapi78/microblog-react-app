@@ -11,7 +11,7 @@ function NavbarUp(props) {
             className="linkText"
             to={{
               pathname: "/",
-              state: { newUserName: userName },
+              state: { newUserName: userName || "anonymous user" },
             }}
           >
             Home

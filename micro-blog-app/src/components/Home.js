@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 function Home() {
   const location = useLocation();
-  const { newUserName } = location.state;
+  const { newUserName } = location.state || "";
   const [tweetsList, setTweetsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
