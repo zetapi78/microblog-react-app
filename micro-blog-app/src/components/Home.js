@@ -22,10 +22,9 @@ function Home() {
       });
   }, [appContext.refreshTime]);
 
+  //this is to run a fetch every 3 min
   useInterval(() => {
-    // Your custom logic here
     appContext.setRefreshTime(appContext.refreshTime + 1);
-    console.log(appContext.refreshTime);
   }, 180000); //setting the refresh time to 3min
 
   return (
