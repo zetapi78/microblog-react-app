@@ -6,7 +6,7 @@ const url =
 export function getTweets() {
   return fetch(url);
 }
-
+//funtion to do Fetch Post
 export function postTweets(inputdata) {
   return fetch(url, {
     method: "POST",
