@@ -8,7 +8,7 @@ import "./App.css";
 function App() {
   const [tweetList, setTweetList] = useState([]);
   const savedUserName = JSON.parse(window.localStorage.getItem("username"));
-  const [userName, setUserName] = useState(savedUserName);
+  const [userName, setUserName] = useState(savedUserName || "anonymous");
   const [refreshTime, setRefreshTime] = useState(0);
   return (
     <Router>
